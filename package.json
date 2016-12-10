@@ -1,0 +1,14 @@
+{
+  "name": "weather-request",
+  "version": "1.0.0",
+  "description": "Weather Request Module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Goma::NanoHa",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^2.0.0"
+  }
+}
