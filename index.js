@@ -58,7 +58,7 @@ class WeatherReq
     _convertToWeather(weather)
     {
         const main = require('./weather').main[weather]
-        return (typeof main == 'undefined') ?
+        return (this._empty(main)) ?
             (weather) :
             main
 
