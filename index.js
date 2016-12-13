@@ -8,16 +8,22 @@
 
 const request = require('sync-req')
 
-class Weather
+class WeatherReq
 {
 
-    constructor(APPID, lang = 'ja', celsius = true)
+    constructor(KEY, config = {})
     {
-        this._APIKey = APPID
         this._endpointBase = 'http://api.openweathermap.org/data/2.5/forecast/daily'
-        this._lang = lang
-        this._celsius = celsius
+        this._APIKey = KEY
+        this._lang = (this._empty(config.lang)) ? 'JP' : config.lang
+        this._celsius = (this._empty(config.celsius)) ? true : config.celsius
         this._responce
+
+        if(this._empty(this._APIKey)) {
+            console.error('Empty APIKey. Exit 1')
+            process.exit();
+        }
+
     }
 
     get(zipCode = 0)
@@ -25,13 +31,12 @@ class Weather
 
         zipCode = this._checkZpiCode(zipCode)
         if(!zipCode) {
-            return false;
+            return 'No ZIP Code';
         }
 
         let form = {
-            zip: `${zipCode},JP`,
+            zip: `${zipCode},${this._lang}`,
             cnt: 2,
-            lang: 'ja',
             APPID: this._APIKey
         }
 
@@ -84,7 +89,12 @@ class Weather
         return url
     }
 
+    _empty(text)
+    {
+        return (typeof text == 'undefined')? true : false
+    }
+
 }
 
-module.exports = Weather
+module.exports = WeatherReq
 
